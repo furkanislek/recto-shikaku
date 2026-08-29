@@ -1,26 +1,212 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ---- Recto candy design tokens (mirrors the game's app_colors.dart) ---- */
+@theme {
+  --color-cream: #fff6e4;
+  --color-mint: #d9efdc;
+  --color-surface: #fcf9f8;
+  --color-panel: #fffcf6;
+  --color-panel-border: #f1e6cc;
+  --color-panel-bevel: #e9dbb8;
+  --color-ink: #1b1c1c;
+  --color-ink-soft: #4c4f4c;
+  --color-primary: #43a860;
+  --color-primary-strong: #2e8347;
+  --color-primary-deep: #1f6132;
+  --color-gold: #edae3b;
+  --color-coral: #e87a55;
+  --color-candy-blue: #5b8def;
+  --color-candy-purple: #b168c8;
+  --color-candy-teal: #3bbba4;
+  --color-candy-pink: #e96fa0;
+  --shadow-card: 0 10px 30px rgba(62, 110, 74, 0.14);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-hanken), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jbmono), ui-monospace, "SF Mono", monospace;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-cream);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: rgba(67, 168, 96, 0.25);
+}
+
+:focus-visible {
+  outline: 3px solid rgba(67, 168, 96, 0.55);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* Fixed page backdrop — the game's cream→mint gradient, viewport-sized */
+.page-bg {
+  position: fixed;
+  inset: 0; /* fallback for browsers without lvh support */
+  height: 100lvh; /* keeps the strip revealed during iOS toolbar collapse painted */
+  z-index: -10;
+  background: linear-gradient(180deg, #fff6e4 0%, #f6f2dd 45%, #d9efdc 100%);
+}
+
+/* ---- Candy surfaces ---- */
+.candy-panel {
+  background: var(--color-panel);
+  border: 1px solid var(--color-panel-border);
+  border-radius: 1.5rem;
+  box-shadow:
+    0 4px 0 var(--color-panel-bevel),
+    0 14px 30px rgba(62, 110, 74, 0.12);
+}
+
+.btn-candy {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  /* primary-strong (not primary) so white 14px text passes WCAG AA (4.72:1) */
+  background: var(--color-primary-strong);
+  color: #fff;
+  font-weight: 700;
+  border-radius: 999px;
+  box-shadow: 0 4px 0 var(--color-primary-deep);
+  transition:
+    transform 0.12s ease,
+    box-shadow 0.12s ease,
+    filter 0.12s ease;
+}
+.btn-candy:hover {
+  filter: brightness(0.95);
+}
+.btn-candy:active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 var(--color-primary-deep);
+}
+
+.chip-mono {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* ---- Shikaku board (pixel rules from grid_painter.dart) ---- */
+.shk-wrap {
+  container-type: inline-size;
+  width: 100%;
+}
+.shk-board {
+  position: relative;
+  width: 100%;
+  --cell: calc(100cqw / var(--gw));
+  --gap: clamp(2.5px, calc(var(--cell) * 0.1), 6px);
+  --rad: clamp(3px, calc(var(--cell) * 0.18), 9px);
+  --bev: clamp(1.5px, calc(var(--cell) * 0.06), 3.5px);
+  --cluefs: clamp(11px, calc(var(--cell) * 0.42), 26px);
+}
+.shk-cell,
+.shk-piece {
+  position: absolute;
+}
+.shk-cell-inner {
+  position: absolute;
+  inset: calc(var(--gap) / 2);
+  background: #ffffff;
+  border-radius: var(--rad);
+  box-shadow: 0 var(--bev) 0 rgba(220, 217, 217, 0.75);
+  display: grid;
+  place-items: center;
+}
+.shk-clue {
+  font-weight: 700;
+  font-size: var(--cluefs);
+  line-height: 1;
+  color: var(--color-ink);
+}
+.shk-piece-inner {
+  position: absolute;
+  inset: calc(var(--gap) / 2);
+  border-radius: var(--rad);
+  overflow: hidden;
+}
+.shk-piece-clue {
+  position: absolute;
+  font-weight: 700;
+  font-size: var(--cluefs);
+  line-height: 1;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  transform: translate(-50%, -50%);
+}
+.shk-line {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.22);
+}
+
+/* ---- FAQ accordion ---- */
+.faq-item summary {
+  cursor: pointer;
+  list-style: none;
+}
+.faq-item summary::-webkit-details-marker {
+  display: none;
+}
+.faq-item summary .faq-icon {
+  transition: transform 0.25s ease;
+}
+.faq-item[open] summary .faq-icon {
+  transform: rotate(45deg);
+}
+
+/* ---- Hero entrance (pure CSS so the LCP headline never waits for hydration) ---- */
+@keyframes hero-rise {
+  from {
+    opacity: 0;
+    transform: translateY(26px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.hero-enter {
+  animation: hero-rise 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* ---- Scroll cue ---- */
+@keyframes cue-dot {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  70% {
+    transform: translateY(14px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+}
+.cue-dot {
+  animation: cue-dot 1.8s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .cue-dot,
+  .hero-enter {
+    animation: none;
+  }
 }

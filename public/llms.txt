@@ -1,0 +1,34 @@
+# Recto: Shikaku Patches Puzzle
+
+> Recto (also listed as "Shikaku Patches Puzzle - Recto", and known as "Patches") is a free, calm, candy-bright mobile puzzle game for iOS and Android based on Shikaku, the classic Japanese "rectangle division" logic puzzle popularized by Nikoli. Players draw rectangles on a grid so that every rectangle contains exactly one number and covers exactly that many cells; covering the whole grid solves the puzzle.
+
+## Key facts
+
+- Name: Recto (App Store listing: "Shikaku Patches Puzzle - Recto"; subtitle: "Daily rectangle brain teasers")
+- Genre: Shikaku / rectangle-division logic puzzle (related to Sudoku, Nonogram/Picross, Kakuro)
+- Price: free to download and play
+- Platforms: iOS (App Store) and Android (Google Play)
+- Levels: 1,100+ handcrafted puzzles across 5 difficulty tracks (Baby, Easy, Medium, Hard, Expert), from 4×4 up to 18×18 grids
+- Works fully offline; no account needed
+- Cloud save: Game Center on iOS, Google Play Games on Android
+- Smart hint system, undo, solve timer, score, daily missions, streaks and token rewards
+- Localized into 46 in-app languages; store listings in ~50 locales
+- Developer: Furkan Akif İşlek
+
+## How to play Shikaku
+
+1. Read the numbers: each clue gives the exact area of the rectangle that must contain it.
+2. Draw rectangles: drag to draw a patch; every patch must hold exactly one number and cover exactly that many cells.
+3. Fill the board: when every cell belongs to a patch, the puzzle is solved.
+
+## Links
+
+- App Store (iOS): https://apps.apple.com/app/id6801644267
+- Google Play (Android): https://play.google.com/store/apps/details?id=com.furkanislek.recto
+- Support: https://furkanislek.github.io/support.html
+- Privacy policy: https://furkanislek.github.io/privacy-policy.html
+
+## Pages
+
+- / : English landing page (how to play, features, FAQ, download links)
+- /tr : Turkish landing page (Türkçe tanıtım sayfası)

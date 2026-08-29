@@ -1,36 +1,35 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# recto-web
 
-## Getting Started
+Marketing site for **Recto — Shikaku Patches Puzzle** ([App Store](https://apps.apple.com/app/id6801644267) · [Google Play](https://play.google.com/store/apps/details?id=com.furkanislek.recto)).
 
-First, run the development server:
+Next.js 16 (App Router, Turbopack) · Tailwind CSS v4 · [motion](https://motion.dev) (Framer Motion) · TypeScript.
+
+## Develop
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Build
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run build && npm run start
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Deploying
 
-## Learn More
+**Set `NEXT_PUBLIC_SITE_URL` to the real production domain** (see `.env.example`). Every canonical URL, hreflang alternate, sitemap entry, robots.txt and JSON-LD block derives from it via [lib/site.ts](lib/site.ts); the fallback `https://rectogame.app` is a placeholder.
 
-To learn more about Next.js, take a look at the following resources:
+## Structure
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- `/` — English landing page, `/tr` — Turkish. Two root layouts via route groups `app/(en)` and `app/(tr)` so each `<html lang>` is correct; shared page body in [components/LandingPage.tsx](components/LandingPage.tsx), copy in [lib/content.ts](lib/content.ts).
+- The phone "gameplay" sections don't use video — the board is recreated in HTML/CSS from the game's real level data and rendering rules ([lib/levels.ts](lib/levels.ts), [components/ShikakuBoard.tsx](components/ShikakuBoard.tsx)), driven by scroll ([components/ScrollDemo.tsx](components/ScrollDemo.tsx)).
+- SEO: per-locale metadata + hreflang ([lib/seo.ts](lib/seo.ts)), JSON-LD (VideoGame/MobileApplication, FAQPage, WebSite), `app/sitemap.ts`, `app/robots.ts`, `app/manifest.ts`, generated OG images (`opengraph-image.tsx`, drawn with the game's own fonts from `assets/fonts`), `public/llms.txt` for AI crawlers.
+- Screenshots in `public/screens/` are real store captures (status bar cropped; the CSS phone frames draw their own).
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Updating assets
 
-## Deploy on Vercel
+Source of truth is the Flutter app repo (`../shikaku`):
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Screenshots: `store_listing/ios_screenshots/*.png` → resize to 828 px wide, crop the top 84 px (status bar), save into `public/screens/`.
+- App icon: `ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-1024.png` → `public/app-icon.png` (512), `public/app-icon-192.png`, `app/icon.png`, `app/apple-icon.png` (180), `app/favicon.ico`.
