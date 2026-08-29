@@ -93,7 +93,7 @@ const en: Dict = {
     h2: "One puzzle. Both pockets.",
     sub: "Recto feels native on iPhone and Android alike, with cloud save on each platform: Game Center on iOS, Play Games on Android. Start on the sofa, finish in the queue.",
     iosCaption: "iPhone",
-    androidCaption: "Android,
+    androidCaption: "Android",
     iosAlt: "Recto Shikaku puzzle on iPhone: a colorful 9×9 hard-level board almost fully covered with candy-colored rectangles",
     androidAlt: "Recto Shikaku puzzle on Android: a baby-track level mid-solve with a blue and a green rectangle placed on the grid",
   },
