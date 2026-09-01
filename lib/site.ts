@@ -3,7 +3,7 @@
  * environment (e.g. Vercel) to the real production domain — every canonical
  * URL, sitemap entry and JSON-LD block derives from it.
  */
-export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://rectogame.app";
+export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.rectoplay.com";
 
 export const APP_NAME = "Recto";
 export const APP_FULL_NAME = "Recto: Shikaku Patches Puzzle";

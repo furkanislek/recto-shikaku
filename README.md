@@ -18,7 +18,7 @@ npm run build && npm run start
 
 ## Deploying
 
-**Set `NEXT_PUBLIC_SITE_URL` to the real production domain** (see `.env.example`). Every canonical URL, hreflang alternate, sitemap entry, robots.txt and JSON-LD block derives from it via [lib/site.ts](lib/site.ts); the fallback `https://rectogame.app` is a placeholder.
+**Set `NEXT_PUBLIC_SITE_URL` to the real production domain** (see `.env.example`). Every canonical URL, hreflang alternate, sitemap entry, robots.txt and JSON-LD block derives from it via [lib/site.ts](lib/site.ts); the fallback is the production domain `https://www.rectoplay.com`.
 
 ## Structure
 
