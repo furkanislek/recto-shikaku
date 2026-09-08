@@ -35,8 +35,8 @@ export default function Navbar({
     <div className="fixed inset-x-0 top-0 z-50 px-4 pt-3">
       <nav
         className={`mx-auto flex max-w-5xl items-center justify-between rounded-full py-2 pl-4 pr-2 transition-all duration-300 ${scrolled
-            ? "border border-panel-border bg-panel/85 shadow-[0_4px_0_var(--color-panel-bevel),0_14px_30px_rgba(62,110,74,0.1)] backdrop-blur-md"
-            : "border border-transparent"
+          ? "border border-panel-border bg-panel/85 shadow-[0_4px_0_var(--color-panel-bevel),0_14px_30px_rgba(62,110,74,0.1)] backdrop-blur-md"
+          : "border border-transparent"
           }`}
         aria-label={nav.mainLabel}
       >
@@ -67,7 +67,7 @@ export default function Navbar({
             </details>
           ) : (
             <Link href={otherLangHref} className="chip-mono rounded-full px-3 py-2 text-ink-soft transition-colors hover:text-ink">
-              {otherLangLabel === "English" ? "EN" : "TR"}
+              {otherLangLabel}
               <span className="sr-only"> {otherLangLabel}</span>
             </Link>
           )}

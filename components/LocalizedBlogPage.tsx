@@ -1,8 +1,11 @@
 import Link from "next/link";
+import { DICTS } from "@/lib/content";
 import type { BlogArticle } from "@/lib/blog-content";
+import type { SiteLocale } from "@/lib/locales";
 import { getLocaleConfig, SITE_LOCALES } from "@/lib/locales";
-import { APP_STORE_URL, AUTHOR, PLAY_STORE_URL, SITE_URL } from "@/lib/site";
+import { AUTHOR, SITE_URL } from "@/lib/site";
 import LogoMark from "./LogoMark";
+import StoreBadges from "./StoreBadges";
 
 function buildJsonLd(article: BlogArticle, articlePath: string) {
     const config = getLocaleConfig(article.locale);
@@ -45,12 +48,15 @@ export default function LocalizedBlogPage({
     article,
     pathPrefix = "/blog",
     canonicalPath,
+    languagePath,
 }: {
     article: BlogArticle;
     pathPrefix?: string;
     canonicalPath?: string;
+    languagePath?: (locale: SiteLocale) => string;
 }) {
     const config = getLocaleConfig(article.locale);
+    const dict = DICTS[article.locale];
     const localePath = config?.path ?? "/";
     const languageOptions = SITE_LOCALES.filter((item) => item.code !== article.locale);
     const articlePath = canonicalPath ?? `${pathPrefix}/${article.locale.toLowerCase()}/what-is-shikaku`;
@@ -71,7 +77,7 @@ export default function LocalizedBlogPage({
                         <summary className="chip-mono cursor-pointer list-none rounded-full px-3 py-2 text-ink-soft hover:text-ink">{config?.nativeName}</summary>
                         <div className="absolute end-0 top-11 z-10 grid max-h-72 w-56 grid-cols-2 gap-1 overflow-auto rounded-2xl border border-panel-border bg-panel p-2 shadow-card">
                             {languageOptions.map((item) => (
-                                <Link key={item.code} href={`/blog/${item.code.toLowerCase()}/what-is-shikaku`} className="rounded-lg px-2 py-2 text-sm hover:bg-cream">
+                                <Link key={item.code} href={languagePath?.(item.code) ?? `/blog/${item.code.toLowerCase()}/what-is-shikaku`} className="rounded-lg px-2 py-2 text-sm hover:bg-cream">
                                     {item.nativeName}
                                 </Link>
                             ))}
@@ -110,10 +116,7 @@ export default function LocalizedBlogPage({
                     <section id="download" className="mt-20 rounded-[2rem] bg-primary-deep px-6 py-12 text-center text-white sm:px-12">
                         <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl">{article.ctaTitle}</h2>
                         <p className="mx-auto mt-4 max-w-xl text-white/80">{article.ctaBody}</p>
-                        <div className="mt-8 flex flex-wrap justify-center gap-3">
-                            <a href={APP_STORE_URL} target="_blank" rel="noopener noreferrer" className="rounded-xl bg-white px-5 py-3 font-bold text-ink hover:bg-cream">App Store</a>
-                            <a href={PLAY_STORE_URL} target="_blank" rel="noopener noreferrer" className="rounded-xl bg-white px-5 py-3 font-bold text-ink hover:bg-cream">Google Play</a>
-                        </div>
+                        <StoreBadges badges={dict.badges} size="lg" className="mt-8" />
                     </section>
                 </article>
             </main>

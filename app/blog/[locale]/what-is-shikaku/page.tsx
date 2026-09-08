@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import LocalizedBlogPage from "@/components/LocalizedBlogPage";
-import { SHIKAKU_ARTICLES } from "@/lib/blog-content";
-import { LOCALE_CODES, getLocaleConfig, SITE_LOCALES, type SiteLocale } from "@/lib/locales";
+import { BLOG_POSTS, blogPath, getBlogPost } from "@/lib/blog-catalog";
+import { LOCALE_CODES, getLocaleConfig, SITE_LOCALES } from "@/lib/locales";
 import { SITE_URL } from "@/lib/site";
 
 export function generateStaticParams() {
@@ -12,24 +12,28 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
     const { locale: rawLocale } = await params;
     const locale = SITE_LOCALES.find((item) => item.code.toLowerCase() === rawLocale.toLowerCase());
-    const article = locale ? SHIKAKU_ARTICLES[locale.code] : undefined;
-    if (!locale || !article) return {};
+    const post = locale ? getBlogPost(locale.code, BLOG_POSTS.find((item) => item.locale === locale.code && item.key === "what-is-shikaku")?.slug ?? "") : undefined;
+    if (!locale || !post) return {};
 
     const languages = Object.fromEntries(
-        SITE_LOCALES.map((item) => [item.bcp47, `${SITE_URL}/blog/${item.code.toLowerCase()}/what-is-shikaku`]),
+        SITE_LOCALES.map((item) => {
+            const localized = BLOG_POSTS.find((candidate) => candidate.locale === item.code && candidate.key === "what-is-shikaku");
+            return [item.bcp47, `${SITE_URL}${localized ? blogPath(localized) : `/blog/${item.code.toLowerCase()}/what-is-shikaku`}`];
+        }),
     );
     return {
-        title: article.title,
-        description: article.description,
+        metadataBase: new URL(SITE_URL),
+        title: post.title,
+        description: post.description,
         alternates: {
-            canonical: `/blog/${locale.code.toLowerCase()}/what-is-shikaku`,
+            canonical: blogPath(post),
             languages: { ...languages, "x-default": `${SITE_URL}/blog/en/what-is-shikaku` },
         },
         openGraph: {
             type: "article",
-            title: article.title,
-            description: article.description,
-            url: `${SITE_URL}/blog/${locale.code.toLowerCase()}/what-is-shikaku`,
+            title: post.title,
+            description: post.description,
+            url: `${SITE_URL}${blogPath(post)}`,
             locale: locale.bcp47,
         },
     };
@@ -38,7 +42,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 export default async function WhatIsShikakuPage({ params }: { params: Promise<{ locale: string }> }) {
     const { locale: rawLocale } = await params;
     const config = getLocaleConfig(rawLocale);
-    const article = config ? SHIKAKU_ARTICLES[config.code as SiteLocale] : undefined;
-    if (!config || !article) notFound();
-    return <LocalizedBlogPage article={article} />;
+    const post = config ? BLOG_POSTS.find((item) => item.locale === config.code && item.key === "what-is-shikaku") : undefined;
+    if (!config || !post) notFound();
+    return <LocalizedBlogPage article={post} canonicalPath={blogPath(post)} languagePath={(locale) => blogPath(BLOG_POSTS.find((item) => item.locale === locale && item.key === "what-is-shikaku") ?? post)} />;
 }

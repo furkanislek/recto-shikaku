@@ -24,7 +24,7 @@ export default function LandingPage({ lang }: { lang: Lang }) {
       <Navbar
         nav={d.nav}
         homeHref={LANG_PATHS[lang]}
-        otherLangLabel={d.otherLangLabel}
+        otherLangLabel={lang}
         otherLangHref={d.otherLangHref}
         languages={SITE_LOCALES}
       />
