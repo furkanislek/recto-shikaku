@@ -25,6 +25,7 @@ export default function GameScreen({
   score,
   time,
   moves,
+  labels,
   children,
 }: {
   level: string;
@@ -33,6 +34,7 @@ export default function GameScreen({
   score: ReactNode;
   time: string;
   moves: ReactNode;
+  labels: { score: string; time: string; moves: string; undo: string; hint: string; reset: string };
   children: ReactNode;
 }) {
   return (
@@ -52,17 +54,17 @@ export default function GameScreen({
           </span>
         </div>
         <span className="chip-mono whitespace-nowrap text-[9px] text-ink-soft">
-          SCORE: <span className="text-ink">{score}</span>
+          {labels.score}: <span className="text-ink">{score}</span>
         </span>
       </div>
       {/* time / moves */}
       <div className="flex items-end justify-between px-4 pt-3">
         <div>
-          <div className="chip-mono text-[10px] text-ink-soft">TIME</div>
+          <div className="chip-mono text-[10px] text-ink-soft">{labels.time}</div>
           <div className="text-[24px] font-extrabold leading-none tracking-tight">{time}</div>
         </div>
         <div className="text-right">
-          <div className="chip-mono text-[10px] text-ink-soft">MOVES</div>
+          <div className="chip-mono text-[10px] text-ink-soft">{labels.moves}</div>
           <div className="text-[24px] font-extrabold leading-none tracking-tight">{moves}</div>
         </div>
       </div>
@@ -73,7 +75,7 @@ export default function GameScreen({
       <div className="mx-4 border-t border-ink/10" />
       <div className="flex items-center justify-around px-6 pb-7 pt-3">
         <BottomAction
-          label="UNDO"
+          label={labels.undo}
           icon={
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden>
               <path d="M8 4 4 8l4 4" stroke="#1B1C1C" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
@@ -82,7 +84,7 @@ export default function GameScreen({
           }
         />
         <BottomAction
-          label="HINT"
+          label={labels.hint}
           badge="3"
           icon={
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden>
@@ -97,7 +99,7 @@ export default function GameScreen({
           }
         />
         <BottomAction
-          label="RESET"
+          label={labels.reset}
           icon={
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden>
               <path

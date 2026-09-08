@@ -22,5 +22,5 @@ import { SITE_LOCALES, type SiteLocale } from "./locales";
 export type Lang = SiteLocale;
 
 export const LANG_PATHS: Record<Lang, string> = Object.fromEntries(
-	SITE_LOCALES.map((locale) => [locale.code, locale.path]),
+    SITE_LOCALES.map((locale) => [locale.code, locale.path]),
 ) as Record<Lang, string>;

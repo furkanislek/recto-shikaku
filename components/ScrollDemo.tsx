@@ -162,7 +162,7 @@ export default function ScrollDemo({ demo }: { demo: Dict["demo"] }) {
           </div>
           <div aria-hidden>
             <PhoneFrame platform="ios" className="w-[280px] sm:w-[320px]">
-              <GameScreen level={demo.level} diff={demo.diff} diffColor="#3BBBA4" score="100" time="01:24" moves="7">
+              <GameScreen level={demo.level} diff={demo.diff} diffColor="#3BBBA4" score="100" time="01:24" moves="7" labels={demo}>
                 <div className="w-full">
                   <ShikakuBoard level={DEMO_LEVEL} placed={DEMO_LEVEL.rects.map((_, i) => i)} />
                 </div>
@@ -208,7 +208,7 @@ export default function ScrollDemo({ demo }: { demo: Dict["demo"] }) {
             platform="ios"
             className="w-[min(270px,calc((100svh-250px)/2.19))] lg:w-[min(330px,calc((100svh-150px)/2.19))]"
           >
-            <GameScreen level={demo.level} diff={demo.diff} diffColor="#3BBBA4" score={<motion.span>{score}</motion.span>} time="01:24" moves={<motion.span>{moves}</motion.span>}>
+            <GameScreen level={demo.level} diff={demo.diff} diffColor="#3BBBA4" score={<motion.span>{score}</motion.span>} time="01:24" moves={<motion.span>{moves}</motion.span>} labels={demo}>
               <div className="w-full">
                 <ShikakuBoard level={DEMO_LEVEL} placed={PRE_PLACED}>
                   {/* the growing final patch */}

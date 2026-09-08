@@ -1,6 +1,7 @@
 import type { Lang } from "./site";
 import { SHIKAKU_ARTICLES } from "./blog-content";
 import { getLocaleConfig, SITE_LOCALES, type SiteLocale } from "./locales";
+import { DEMO_UI } from "./demo-content";
 
 export type FaqItem = { q: string; a: string };
 
@@ -31,6 +32,12 @@ export type Dict = {
     level: string;
     diff: string;
     completeTitle: string;
+    score: string;
+    time: string;
+    moves: string;
+    undo: string;
+    hint: string;
+    reset: string;
   };
   dual: {
     h2: string;
@@ -90,6 +97,12 @@ const en: Dict = {
     level: "LEVEL 12",
     diff: "EASY",
     completeTitle: "SHIKAKU!",
+    score: "SCORE",
+    time: "TIME",
+    moves: "MOVES",
+    undo: "UNDO",
+    hint: "HINT",
+    reset: "RESET",
   },
   dual: {
     h2: "One puzzle. Both pockets.",
@@ -258,6 +271,12 @@ const tr: Dict = {
     level: "BÖLÜM 12",
     diff: "KOLAY",
     completeTitle: "SHIKAKU!",
+    score: "SKOR",
+    time: "SÜRE",
+    moves: "HAMLE",
+    undo: "GERİ AL",
+    hint: "İPUCU",
+    reset: "SIFIRLA",
   },
   dual: {
     h2: "iPhone'da da var, Android'de de.",
@@ -408,6 +427,11 @@ function createLocalizedDict(locale: SiteLocale): Dict {
       h1Highlight: article.h1,
       h1Post: "",
       sub: article.intro,
+    },
+    demo: {
+      ...en.demo,
+      ...DEMO_UI[locale],
+      captions: article.sections.map((section) => ({ title: section.title, body: section.body })),
     },
     howTo: { h2: article.sections[0].title, sub: article.sections[0].body, steps },
     features: {
