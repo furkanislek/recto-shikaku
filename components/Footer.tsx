@@ -21,9 +21,6 @@ export default function Footer({ dict, homeHref }: { dict: Dict; homeHref: strin
             <a href={PRIVACY_URL} target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-ink">
               {dict.footer.privacy}
             </a>
-            <Link href={dict.otherLangHref} className="transition-colors hover:text-ink">
-              {dict.otherLangLabel}
-            </Link>
           </nav>
         </div>
         <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm font-semibold text-ink-soft sm:justify-start">
