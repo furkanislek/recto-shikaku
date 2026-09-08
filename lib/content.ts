@@ -1,4 +1,6 @@
 import type { Lang } from "./site";
+import { SHIKAKU_ARTICLES } from "./blog-content";
+import { getLocaleConfig, SITE_LOCALES, type SiteLocale } from "./locales";
 
 export type FaqItem = { q: string; a: string };
 
@@ -384,4 +386,55 @@ const tr: Dict = {
   },
 };
 
-export const DICTS: Record<Lang, Dict> = { en, tr };
+function createLocalizedDict(locale: SiteLocale): Dict {
+  const article = SHIKAKU_ARTICLES[locale];
+  const config = getLocaleConfig(locale);
+  const steps = article.sections.map((section) => ({ title: section.title, body: section.body }));
+  return {
+    ...en,
+    langName: config?.nativeName ?? locale,
+    otherLangLabel: "Languages",
+    otherLangHref: "/",
+    nav: {
+      ...en.nav,
+      howTo: article.sections[0].title,
+      faq: article.faqTitle,
+      download: article.downloadLabel,
+    },
+    hero: {
+      ...en.hero,
+      eyebrow: article.eyebrow,
+      h1Pre: "",
+      h1Highlight: article.h1,
+      h1Post: "",
+      sub: article.intro,
+    },
+    howTo: { h2: article.sections[0].title, sub: article.sections[0].body, steps },
+    features: {
+      ...en.features,
+      h2: article.sections[1].title,
+      sub: article.sections[1].body,
+      items: [...steps, ...en.features.items.slice(3)],
+    },
+    faq: {
+      h2: article.faqTitle,
+      items: article.faq.map((item) => ({ q: item.question, a: item.answer })),
+    },
+    cta: { h2: article.ctaTitle, sub: article.ctaBody, note: article.relatedLabel },
+    meta: {
+      ...en.meta,
+      title: article.title,
+      description: article.description,
+      ogAlt: article.title,
+    },
+  };
+}
+
+const generatedDicts = Object.fromEntries(
+  SITE_LOCALES.filter((locale) => locale.code !== "en" && locale.code !== "tr").map((locale) => [
+    locale.code,
+    createLocalizedDict(locale.code),
+  ]),
+) as Record<Exclude<Lang, "en" | "tr">, Dict>;
+
+export const DICTS: Record<Lang, Dict> = { en, tr, ...generatedDicts };

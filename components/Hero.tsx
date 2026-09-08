@@ -21,6 +21,7 @@ function HighlightUnderline() {
 }
 
 export default function Hero({ hero, badges }: { hero: Dict["hero"]; badges: Dict["badges"] }) {
+  const useCompactHighlight = hero.h1Highlight.length <= 24;
   const reduced = useReducedMotion();
   const { scrollY } = useScroll();
   const contentY = useTransform(scrollY, [0, 700], [0, -170]);
@@ -31,7 +32,7 @@ export default function Hero({ hero, badges }: { hero: Dict["hero"]; badges: Dic
   const cueVisibility = useTransform(cueOpacity, (v) => (v < 0.05 ? "hidden" : "visible"));
 
   return (
-    <header className="relative flex min-h-svh flex-col items-center justify-center overflow-hidden px-6">
+    <header className={`relative flex min-h-svh flex-col items-center justify-center overflow-hidden px-6 ${useCompactHighlight ? "" : "pb-16 pt-24"}`}>
       <CandyField />
       <motion.div
         className="hero-enter relative z-10 flex max-w-3xl flex-col items-center text-center"
@@ -54,11 +55,11 @@ export default function Hero({ hero, badges }: { hero: Dict["hero"]; badges: Dic
         <p className="chip-mono mb-6 rounded-full border border-panel-border bg-panel/80 px-4 py-2 text-ink-soft shadow-[0_2px_0_var(--color-panel-bevel)]">
           {hero.eyebrow}
         </p>
-        <h1 className="text-balance text-[clamp(2.1rem,9.5vw,3rem)] font-extrabold leading-[1.04] tracking-tight sm:text-6xl lg:text-7xl">
+        <h1 className="max-w-3xl text-balance text-[clamp(2.1rem,9.5vw,3rem)] font-extrabold leading-[1.04] tracking-tight sm:text-6xl lg:text-7xl">
           {hero.h1Pre}
-          <span className="relative inline-block whitespace-nowrap">
+          <span className={useCompactHighlight ? "relative inline-block whitespace-nowrap" : "relative inline break-words"}>
             {hero.h1Highlight}
-            <HighlightUnderline />
+            {useCompactHighlight ? <HighlightUnderline /> : null}
           </span>
           {hero.h1Post}
         </h1>
@@ -80,7 +81,7 @@ export default function Hero({ hero, badges }: { hero: Dict["hero"]; badges: Dic
 
       <motion.a
         href="#demo"
-        className="absolute bottom-7 z-10 flex flex-col items-center gap-2 text-ink-soft"
+        className={useCompactHighlight ? "absolute bottom-7 z-10 flex flex-col items-center gap-2 text-ink-soft" : "hidden"}
         style={reduced ? undefined : { opacity: cueOpacity, visibility: cueVisibility }}
         aria-label={hero.scrollCue}
       >

@@ -1,6 +1,6 @@
 import { DICTS } from "@/lib/content";
 import { buildJsonLd } from "@/lib/seo";
-import { LANG_PATHS, type Lang } from "@/lib/site";
+import { LANG_PATHS, SITE_LOCALES, type Lang } from "@/lib/site";
 import DownloadCTA from "./DownloadCTA";
 import DualPhones from "./DualPhones";
 import FAQ from "./FAQ";
@@ -26,6 +26,7 @@ export default function LandingPage({ lang }: { lang: Lang }) {
         homeHref={LANG_PATHS[lang]}
         otherLangLabel={d.otherLangLabel}
         otherLangHref={d.otherLangHref}
+        languages={SITE_LOCALES}
       />
       <main>
         <Hero hero={d.hero} badges={d.badges} />

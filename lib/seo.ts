@@ -7,12 +7,14 @@ import {
   APP_STORE_URL,
   AUTHOR,
   LANG_PATHS,
+  SITE_LOCALES,
+  getLocaleConfig,
   PLAY_STORE_URL,
   SITE_URL,
   type Lang,
 } from "./site";
 
-const KEYWORDS: Record<Lang, string[]> = {
+const KEYWORDS: Partial<Record<Lang, string[]>> = {
   en: [
     "shikaku",
     "shikaku puzzle",
@@ -69,18 +71,21 @@ export function buildMetadata(lang: Lang): Metadata {
     authors: [{ name: AUTHOR }],
     creator: AUTHOR,
     publisher: AUTHOR,
-    keywords: KEYWORDS[lang],
+    keywords: KEYWORDS[lang] ?? KEYWORDS.en,
     category: "games",
     alternates: {
       canonical: path,
-      languages: { en: "/", tr: "/tr", "x-default": "/" },
+      languages: {
+        ...Object.fromEntries(SITE_LOCALES.map((locale) => [locale.bcp47, locale.path])),
+        "x-default": "/",
+      },
     },
     openGraph: {
       type: "website",
       url: path,
       siteName: "Recto",
-      locale: lang === "tr" ? "tr_TR" : "en_US",
-      alternateLocale: lang === "tr" ? "en_US" : "tr_TR",
+      locale: getLocaleConfig(lang)?.bcp47 ?? lang,
+      alternateLocale: SITE_LOCALES.filter((locale) => locale.code !== lang).map((locale) => locale.bcp47),
       title: d.meta.title,
       description: d.meta.description,
     },
@@ -136,7 +141,7 @@ export function buildJsonLd(lang: Lang): object[] {
       gamePlatform: ["iOS", "Android"],
       genre: ["Puzzle", "Logic", "Board"],
       playMode: "SinglePlayer",
-      inLanguage: ["en", "tr"],
+      inLanguage: [getLocaleConfig(lang)?.bcp47 ?? lang],
       isAccessibleForFree: true,
       offers: {
         "@type": "Offer",

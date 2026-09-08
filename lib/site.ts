@@ -15,6 +15,12 @@ export const SUPPORT_URL = "https://furkanislek.github.io/support.html";
 export const PRIVACY_URL = "https://furkanislek.github.io/privacy-policy.html";
 export const AUTHOR = "Furkan Akif İşlek";
 
-export type Lang = "en" | "tr";
+export { LOCALE_BY_CODE, LOCALE_CODES, SITE_LOCALES, getLocaleConfig } from "./locales";
+export type { LocaleConfig, SiteLocale } from "./locales";
+import { SITE_LOCALES, type SiteLocale } from "./locales";
 
-export const LANG_PATHS: Record<Lang, string> = { en: "/", tr: "/tr" };
+export type Lang = SiteLocale;
+
+export const LANG_PATHS: Record<Lang, string> = Object.fromEntries(
+	SITE_LOCALES.map((locale) => [locale.code, locale.path]),
+) as Record<Lang, string>;
