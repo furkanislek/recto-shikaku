@@ -8,7 +8,7 @@ const guide = SEO_GUIDES.shikakuEn;
 export const metadata: Metadata = {
     title: guide.title,
     description: guide.description,
-    alternates: { canonical: guide.slug, languages: { en: guide.slug, tr: guide.alternateSlug } },
+    alternates: { canonical: guide.slug, languages: { en: guide.slug, tr: guide.alternateSlug, "x-default": guide.slug } },
     openGraph: { title: guide.title, description: guide.description, url: `${SITE_URL}${guide.slug}` },
 };
 

@@ -8,7 +8,7 @@ const guide = SEO_GUIDES.howToTr;
 export const metadata: Metadata = {
     title: guide.title,
     description: guide.description,
-    alternates: { canonical: guide.slug, languages: { en: guide.alternateSlug, tr: guide.slug } },
+    alternates: { canonical: guide.slug, languages: { en: guide.alternateSlug, tr: guide.slug, "x-default": guide.alternateSlug } },
     openGraph: { title: guide.title, description: guide.description, url: `${SITE_URL}${guide.slug}` },
 };
 

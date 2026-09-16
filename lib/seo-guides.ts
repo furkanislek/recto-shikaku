@@ -64,7 +64,7 @@ export const SEO_GUIDES: Record<string, SeoGuide> = {
         relatedLabel: "Continue exploring",
         related: [
             { href: "/how-to-play-shikaku", label: "How to play Shikaku" },
-            { href: "/rectangle-puzzle", label: "Rectangle puzzle guide" },
+            { href: "/shikaku-puzzle", label: "Rectangle puzzle guide" },
         ],
         homeLabel: "Recto home",
         languageLabel: "Türkçe",
@@ -115,7 +115,7 @@ export const SEO_GUIDES: Record<string, SeoGuide> = {
         relatedLabel: "More Shikaku guides",
         related: [
             { href: "/shikaku-puzzle", label: "What is Shikaku?" },
-            { href: "/offline-puzzle-game", label: "Offline puzzle game" },
+            { href: "/shikaku-puzzle", label: "Offline puzzle game" },
         ],
         homeLabel: "Recto home",
         languageLabel: "Türkçe",
@@ -166,7 +166,7 @@ export const SEO_GUIDES: Record<string, SeoGuide> = {
         relatedLabel: "Keşfetmeye devam et",
         related: [
             { href: "/tr/shikaku-nasil-oynanir", label: "Shikaku nasıl oynanır?" },
-            { href: "/tr/dikdortgen-bulmaca", label: "Dikdörtgen bulmaca rehberi" },
+            { href: "/tr/shikaku-bulmaca", label: "Dikdörtgen bulmaca rehberi" },
         ],
         homeLabel: "Recto ana sayfa",
         languageLabel: "English",
