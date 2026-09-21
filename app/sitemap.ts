@@ -22,12 +22,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
     alternates: { languages: Object.fromEntries(BLOG_POSTS.filter((item) => item.key === post.key).map((item) => [SITE_LOCALES.find((locale) => locale.code === item.locale)?.bcp47 ?? item.locale, `${SITE_URL}${blogPath(item)}`])) },
   }));
-  const legacyBlogEntries = SITE_LOCALES.map((locale) => ({
-    url: `${SITE_URL}/blog/${locale.code.toLowerCase()}/what-is-shikaku`,
-    lastModified,
-    changeFrequency: "monthly" as const,
-    priority: 0.6,
-  }));
   return [
     {
       url: `${SITE_URL}/`,
@@ -73,6 +67,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
       alternates: { languages: { en: `${SITE_URL}/how-to-play-shikaku`, tr: `${SITE_URL}/tr/shikaku-nasil-oynanir` } },
     },
     ...blogEntries,
-    ...legacyBlogEntries,
   ];
 }
